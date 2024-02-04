@@ -1,6 +1,6 @@
 //Функция для проверки, является ли строка палиндромом
 
-const checkPalyndrome = (string) => {
+const checkIfPalyndrome = (string) => {
   string=string.replaceAll(' ', '');
   string=string.toLowerCase();
   let newString = '';
