@@ -1,6 +1,6 @@
 //Функция для проверки, является ли строка палиндромом
 
-function checkPalyndrome(string) {
+const checkPalyndrome = (string) => {
   string=string.replaceAll(' ', '');
   string=string.toLowerCase();
   let newString = '';
@@ -14,7 +14,7 @@ function checkPalyndrome(string) {
 //и возвращает их в виде целого положительного числа.
 //Если в строке нет ни одной цифры, функция должна вернуть NaN.
 
-function returnNumber (string) {
+const returnNumber = (string) => {
   string = string.replace(/[^\d]/g, '');
   return string = parseInt(string);
 }
@@ -23,7 +23,7 @@ function returnNumber (string) {
 //минимальную длину и строку с добавочными символами —
 //и возвращает исходную строку, дополненную указанными символами до заданной длины.
 
-function trimString (string, minlength, addsymbols) {
+const trimString = (string, minlength, addsymbols) => {
   if (string.length>=minlength) {
     return string;
     }
@@ -40,6 +40,4 @@ function trimString (string, minlength, addsymbols) {
 }
 
 //Функция для проверки длины строки
-function checkLength (string, limit) {
-return string.length <= limit? true : false;
-}
+const checkLength = (string, limit) => string.length <= limit? true : false;
