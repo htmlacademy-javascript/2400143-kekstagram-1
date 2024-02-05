@@ -1,12 +1,12 @@
 //Функция для проверки, является ли строка палиндромом
 
 const checkIfPalyndrome = (string) => {
-  string=string.replaceAll(' ', '');
-  string=string.toLowerCase();
+  string=string.replaceAll(' ', '').toLowerCase();
   let newString = '';
   for (let i=string.length-1; i>=0;i--) {
-  newString += string[i];}
-  return newString === string ?  true : false;
+    newString += string[i];
+  }
+  return newString === string;
   }
 
 //Функция, которая принимает строку,
@@ -16,28 +16,38 @@ const checkIfPalyndrome = (string) => {
 
 const returnNumber = (string) => {
   string = string.replace(/[^\d]/g, '');
-  return string = parseInt(string);
+  return string = parseInt(string,10);
 }
 
 //Функция, которая принимает три параметра: исходную строку,
 //минимальную длину и строку с добавочными символами —
 //и возвращает исходную строку, дополненную указанными символами до заданной длины.
 
-const trimString = (string, minlength, addsymbols) => {
+const trimString = (string,minlength,addsymbols) => {
   if (string.length>=minlength) {
     return string;
+  }
+  if (string.length&&addsymbols.length<minlength) {
+    let message = '';
+    for (let i=0; i<minlength-string.length;i++) {
+      message+=addsymbols;
     }
-  if (string.length && addsymbols.length<minlength) {
-    let message='';
-    for (let i=0; i<minlength-string.length; i++)
-    {message+=addsymbols;}
-    if (message.length>minlength) {return addsymbols.slice(0, minlength-string.length-addsymbols.length)+addsymbols+string};
+    if (message.length>minlength) {
+      return addsymbols.slice(0, minlength-string.length-addsymbols.length)+addsymbols+string;
+    }
     return message+string;
-    }
-  if (string.length<minlength && addsymbols.length>minlength)
-    {return addsymbols.slice(0,minlength-string.length) + string;
-    }
-}
+  }
+  if (addsymbols.length>minlength) {
+    return addsymbols.slice(0,minlength-string.length) + string;
+  }
+  }
+
+
 
 //Функция для проверки длины строки
-const checkLength = (string, limit) => string.length <= limit? true : false;
+const checkLength = (string, limit) => string.length <= limit;
+
+
+
+
+
