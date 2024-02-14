@@ -34,6 +34,13 @@ const MESSAGES = [
 // количество объектов, из которых должен состоять итоговый массив
 const DESCRIPTIONS_COUNT = 25;
 
+// константы с заданными значениями диапазонов
+const AVATARS_COUNT = 6;
+const LIKES_MIN_COUNT = 15;
+const LIKES_MAX_COUNT = 200;
+const PHOTO_ID_MAX = 25;
+const PHOTO_URL_MAX = 25;
+
 // генератор рандомных чисел (без ограничений повторяемости при заданном промежутке)
 const getRandomInteger = (a, b) => {
   const lower = Math.ceil(Math.min(a, b));
@@ -62,8 +69,8 @@ const createRandomIdFromRangeGenerator = (min, max) => {
 };
 
 // переменные для создания уникального id в объекте createPhotoDescription
-const createPhotoId = createRandomIdFromRangeGenerator(1,25);
-const createPhotoUrl = createRandomIdFromRangeGenerator(1,25);
+const createPhotoId = createRandomIdFromRangeGenerator(1,PHOTO_ID_MAX);
+const createPhotoUrl = createRandomIdFromRangeGenerator(1,PHOTO_URL_MAX);
 
 // функция для создания уникального id (без лимита значений)
 const createIdGenerator = () => {
@@ -77,11 +84,16 @@ const createIdGenerator = () => {
 // переменная для создания уникального id комментария
 const createCommentId = createIdGenerator();
 
+// функция-генератор комментариев
+const createMessage = () => Array.from({length: getRandomInteger(1,2)}, () =>
+  getRandomArrayElement(MESSAGES))
+  .join(' ');
+
 //функция, которая создает объект-комментарий
 const createComment = () => ({
   id: createCommentId(),
-  avatar: `img/avatar-${getRandomInteger(1,6)}.svg`,
-  message: getRandomArrayElement(MESSAGES),
+  avatar: `img/avatar-${getRandomInteger(1,AVATARS_COUNT)}.svg`,
+  message: createMessage(),
   name: getRandomArrayElement(NAMES),
 });
 
@@ -90,7 +102,7 @@ const createPhotoDescription = () => ({
   id: createPhotoId(),
   url: `photos/${createPhotoUrl()}.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
-  likes: getRandomInteger(15,200),
+  likes: getRandomInteger(LIKES_MIN_COUNT,LIKES_MAX_COUNT),
   comments: Array.from({length: 20}, createComment)
 });
 
