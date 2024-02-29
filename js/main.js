@@ -1,4 +1,1 @@
-import {createPost} from './data.js';
-
-createPost();
-
+import './pictures.js';
