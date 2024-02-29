@@ -74,6 +74,5 @@ const createPhotoDescription = () => ({
 
 //функция, которая создаст финальный массив из комментариев и фото
 const createPost = () => Array.from({length:DESCRIPTIONS_COUNT},createPhotoDescription);
-createPost();
 
 export {createPost};
