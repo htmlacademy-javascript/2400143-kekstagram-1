@@ -11,7 +11,7 @@ const renderComments = (comments) => {
   const commentsFragment = document.createDocumentFragment();
   comments.forEach(({avatar,name,message}) => {
     const comment = document.createElement('li');
-    comment.innerHTML = '<li><img class="social__picture" src="" alt="" widht="35" heigh="35" ><p class="social__text"></p></li>';
+    comment.innerHTML = '<img class="social__picture" src="" alt="" widht="35" heigh="35" ><p class="social__text"></p>';
     comment.classList.add('social__comment');
     comment.querySelector('.social__picture').src = avatar;
     comment.querySelector('.social__picture').alt = name;
