@@ -1,3 +1,5 @@
+import { isEscapeKey } from './util.js';
+
 const VALID_HASHTAG = /^#[a-zа-яё0-9]{1,19}$/i;
 const TAG_COUNT = 5;
 const TAG_ERROR_MESSAGE = 'нарушены требования к хэштегам';
@@ -15,16 +17,25 @@ const pristine = new Pristine(imageForm, {
   errorTextClass: 'img-upload__field-wrapper__error'
 });
 
-const openUpload = () => {
-  imageOverlay.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-};
-
 const closeUpload = () => {
   imageOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
   imageForm.reset();
   pristine.reset();
+};
+
+const onDocumentKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeUpload();
+    imageForm.removeEventListener('keydown', onDocumentKeydown);
+  }
+};
+
+const openUpload = () => {
+  imageOverlay.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  imageForm.addEventListener('keydown', onDocumentKeydown);
 };
 
 captureInput.addEventListener('keydown', (evt) => {
@@ -71,8 +82,9 @@ pristine.addValidator(
 );
 
 const onFormSubmit = (evt) => {
-  evt.preventDefault();
-  pristine.validate();
+  if(!pristine.validate()) {
+    evt.preventDefault();
+  }
 };
 
 uploadFieldOpen.addEventListener('change', onUploadClick);
