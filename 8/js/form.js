@@ -24,18 +24,28 @@ const closeUpload = () => {
   pristine.reset();
 };
 
+const onCancelClick = () => {
+  closeUpload();
+};
+
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeUpload();
-    imageForm.removeEventListener('keydown', onDocumentKeydown);
+    document.removeEventListener('keydown', onDocumentKeydown);
+    uploadFieldClose.removeEventListener('click', onCancelClick);
   }
 };
 
 const openUpload = () => {
   imageOverlay.classList.remove('hidden');
   document.body.classList.add('modal-open');
-  imageForm.addEventListener('keydown', onDocumentKeydown);
+  document.addEventListener('keydown', onDocumentKeydown);
+  uploadFieldClose.addEventListener('click', onCancelClick);
+};
+
+const onUploadClick = () => {
+  openUpload();
 };
 
 captureInput.addEventListener('keydown', (evt) => {
@@ -49,14 +59,6 @@ hashtagInput.addEventListener('keydown', (evt) => {
     evt.stopPropagation();
   }
 });
-
-const onUploadClick = () => {
-  openUpload();
-};
-
-const onCancelClick = () => {
-  closeUpload();
-};
 
 const isValidTag = (tag) => VALID_HASHTAG.test(tag);
 
@@ -88,5 +90,5 @@ const onFormSubmit = (evt) => {
 };
 
 uploadFieldOpen.addEventListener('change', onUploadClick);
-uploadFieldClose.addEventListener('click', onCancelClick);
+
 imageForm.addEventListener('submit', onFormSubmit);
