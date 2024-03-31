@@ -1,4 +1,6 @@
 import { isEscapeKey } from './util.js';
+import { resetScale } from './scale.js';
+import { resetEffects } from './effects.js';
 
 const VALID_HASHTAG = /^#[a-zа-яё0-9]{1,19}$/i;
 const TAG_COUNT = 5;
@@ -20,6 +22,8 @@ const pristine = new Pristine(imageForm, {
 const closeUpload = () => {
   imageOverlay.classList.add('hidden');
   document.body.classList.remove('modal-open');
+  resetScale();
+  resetEffects();
   imageForm.reset();
   pristine.reset();
 };
