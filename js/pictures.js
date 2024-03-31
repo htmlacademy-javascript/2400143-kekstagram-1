@@ -28,7 +28,6 @@ const renderGallery = () => {
     if (!thumbnail) {
       return;
     }
-
     const picture = pictures.find((item) => item.id === +thumbnail.dataset.pictureId);
     openPicture(picture);
   });
