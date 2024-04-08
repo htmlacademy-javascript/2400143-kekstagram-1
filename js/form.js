@@ -1,6 +1,8 @@
 import { isEscapeKey } from './util.js';
 import { resetScale } from './scale.js';
 import { resetEffects } from './effects.js';
+import { sendData } from './api.js';
+import { showErrorMessage, showSuccessMessage } from './message.js';
 
 const VALID_HASHTAG = /^#[a-zа-яё0-9]{1,19}$/i;
 const TAG_COUNT = 5;
@@ -12,12 +14,21 @@ const uploadFieldOpen = document.querySelector('#upload-file');
 const uploadFieldClose = document.querySelector('#upload-cancel');
 const hashtagInput = document.querySelector('.text__hashtags');
 const captureInput = document.querySelector('.text__description');
+const imageSubmitButton = document.querySelector('.img-upload__submit');
 
 const pristine = new Pristine(imageForm, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper__error'
 });
+
+const blockSubmitButton = () => {
+  imageSubmitButton.disabled = true;
+};
+
+const unblockSubmitButton = () => {
+  imageSubmitButton.disabled = false;
+};
 
 const closeUpload = () => {
   imageOverlay.classList.add('hidden');
@@ -53,13 +64,13 @@ const onUploadClick = () => {
 };
 
 captureInput.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape') {
+  if (isEscapeKey) {
     evt.stopPropagation();
   }
 });
 
 hashtagInput.addEventListener('keydown', (evt) => {
-  if (evt.key === 'Escape') {
+  if (isEscapeKey) {
     evt.stopPropagation();
   }
 });
@@ -87,12 +98,31 @@ pristine.addValidator(
   TAG_ERROR_MESSAGE
 );
 
-const onFormSubmit = (evt) => {
-  if(!pristine.validate()) {
-    evt.preventDefault();
-  }
-};
-
 uploadFieldOpen.addEventListener('change', onUploadClick);
 
-imageForm.addEventListener('submit', onFormSubmit);
+
+imageForm.addEventListener('submit', async (evt) => {
+  evt.preventDefault();
+
+  const isValid = pristine.validate();
+  if (isValid) {
+    blockSubmitButton();
+    try {
+      await sendData(new FormData(evt.target));
+      showSuccessMessage();
+    } catch {
+      showErrorMessage();
+    } finally {
+      unblockSubmitButton();
+      closeUpload();
+    }
+  }
+
+  // .catch(
+  //   (err) => {
+  //     showAlert(err.message);
+  //   }
+  // )
+
+});
+
