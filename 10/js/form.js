@@ -100,7 +100,6 @@ pristine.addValidator(
 
 uploadFieldOpen.addEventListener('change', onUploadClick);
 
-
 imageForm.addEventListener('submit', async (evt) => {
   evt.preventDefault();
 
@@ -109,20 +108,14 @@ imageForm.addEventListener('submit', async (evt) => {
     blockSubmitButton();
     try {
       await sendData(new FormData(evt.target));
+      closeUpload();
       showSuccessMessage();
     } catch {
       showErrorMessage();
     } finally {
       unblockSubmitButton();
-      closeUpload();
+      document.removeEventListener('keydown', onDocumentKeydown);
     }
   }
-
-  // .catch(
-  //   (err) => {
-  //     showAlert(err.message);
-  //   }
-  // )
-
 });
 
