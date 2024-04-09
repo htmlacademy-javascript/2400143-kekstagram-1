@@ -12,20 +12,21 @@ const showErrorMessage = () => {
     errorMessage.remove();
     document.body.classList.remove('modal-open');
   };
-  errorButton.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    hideErrorMessage();
-  });
-  document.addEventListener('keydown', () => {
-    if (isEscapeKey) {
+  const errorButtonHandler = () => {
+    errorButton.addEventListener('click', (evt) => {
+      evt.preventDefault();
       hideErrorMessage();
-    }
-  });
-  document.addEventListener('click', (evt) => {
-    if (!evt.target.closest('.error__inner') && !evt.target.closest('.error__button')) {
+    });
+  };
+  const onModalClose = (evt) => {
+    if (errorButtonHandler || isEscapeKey(evt) || !evt.target.closest('.error__inner') && !evt.target.closest('.error__button')) {
       hideErrorMessage();
+      document.removeEventListener('click', onModalClose);
+      document.removeEventListener('keydown', onModalClose);
     }
-  });
+  };
+  document.addEventListener('keydown', onModalClose);
+  document.addEventListener('click', onModalClose);
 };
 
 const showSuccessMessage = () => {
@@ -37,21 +38,21 @@ const showSuccessMessage = () => {
     successMessage.remove();
     document.body.classList.remove('modal-open');
   };
-  successButton.addEventListener('click', (evt) => {
-    evt.preventDefault();
-    hideSuccessMessage();
-  });
-  document.addEventListener('keydown', () => {
-    if (isEscapeKey) {
+  const successButtonHandler = () => {
+    successButton.addEventListener('click', (evt) => {
+      evt.preventDefault();
       hideSuccessMessage();
-    }
-  });
-  document.addEventListener('click', (evt) => {
-    if (!evt.target.closest('.success__inner') && !evt.target.closest('.success__button')) {
+    });
+  };
+  const onModalClose = (evt) => {
+    if (successButtonHandler || isEscapeKey(evt) || !evt.target.closest('.success__inner') && !evt.target.closest('.success__button')) {
       hideSuccessMessage();
+      document.removeEventListener('click', onModalClose);
+      document.removeEventListener('keydown', onModalClose);
     }
-  });
+  };
+  document.addEventListener('keydown', onModalClose);
+  document.addEventListener('click', onModalClose);
 };
-
 
 export { showErrorMessage, showSuccessMessage };
