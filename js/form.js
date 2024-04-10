@@ -37,6 +37,7 @@ const closeUpload = () => {
   resetEffects();
   imageForm.reset();
   pristine.reset();
+  document.removeEventListener('keydown', onDocumentKeydown);
 };
 
 const onCancelClick = () => {
@@ -114,7 +115,6 @@ imageForm.addEventListener('submit', async (evt) => {
       showErrorMessage();
     } finally {
       unblockSubmitButton();
-      document.removeEventListener('keydown', onDocumentKeydown);
     }
   }
 });
