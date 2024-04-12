@@ -39,21 +39,22 @@ const closeUpload = () => {
   pristine.reset();
 };
 
-const onCancelClick = () => {
-  closeUpload();
-};
-
 const onDocumentKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeUpload();
     document.removeEventListener('keydown', onDocumentKeydown);
-    uploadFieldClose.removeEventListener('click', onCancelClick);
   }
+};
+
+const onCancelClick = () => {
+  closeUpload();
+  document.removeEventListener('keydown', onDocumentKeydown);
 };
 
 const onCloseUpload = () => {
   document.removeEventListener('keydown', onDocumentKeydown);
+  uploadFieldClose.removeEventListener('click', onCancelClick);
 };
 
 const openUpload = () => {
