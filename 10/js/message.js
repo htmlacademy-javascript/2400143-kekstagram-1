@@ -19,14 +19,15 @@ const showErrorMessage = () => {
     });
   };
   const onModalClose = (evt) => {
-    if (errorButtonHandler || isEscapeKey(evt) || !evt.target.closest('.error__inner') && !evt.target.closest('.error__button')) {
+    if (errorButtonHandler || isEscapeKey || !evt.target.closest('.error__inner') && !evt.target.closest('.error__button')) {
+      evt.stopPropagation();
       hideErrorMessage();
-      document.removeEventListener('click', onModalClose);
-      document.removeEventListener('keydown', onModalClose);
+      document.body.removeEventListener('click', onModalClose);
+      document.body.removeEventListener('keydown', onModalClose);
     }
   };
-  document.addEventListener('keydown', onModalClose);
-  document.addEventListener('click', onModalClose);
+  document.body.addEventListener('keydown', onModalClose);
+  document.body.addEventListener('click', onModalClose);
 };
 
 const showSuccessMessage = () => {
@@ -45,14 +46,15 @@ const showSuccessMessage = () => {
     });
   };
   const onModalClose = (evt) => {
-    if (successButtonHandler || isEscapeKey(evt) || !evt.target.closest('.success__inner') && !evt.target.closest('.success__button')) {
+    if (successButtonHandler || isEscapeKey || !evt.target.closest('.success__inner') && !evt.target.closest('.success__button')) {
+      evt.stopPropagation();
       hideSuccessMessage();
-      document.removeEventListener('click', onModalClose);
-      document.removeEventListener('keydown', onModalClose);
+      document.body.removeEventListener('click', onModalClose);
+      document.body.removeEventListener('keydown', onModalClose);
     }
   };
-  document.addEventListener('keydown', onModalClose);
-  document.addEventListener('click', onModalClose);
+  document.body.addEventListener('keydown', onModalClose);
+  document.body.addEventListener('click', onModalClose);
 };
 
 export { showErrorMessage, showSuccessMessage };
