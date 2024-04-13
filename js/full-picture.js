@@ -48,14 +48,6 @@ const renderPicture = ({ url, description, likes }) => {
   bigPicture.querySelector('.social__caption').textContent = description;
 };
 
-const openPicture = (data) => {
-  bigPicture.classList.remove('hidden');
-  document.body.classList.add('.modal-open');
-  renderPicture(data);
-  comments = data.comments;
-  renderComments(data.comments);
-};
-
 const closePicture = () => {
   bigPicture.classList.add('hidden');
   comments = [];
@@ -70,11 +62,20 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
+const openPicture = (data) => {
+  bigPicture.classList.remove('hidden');
+  document.body.classList.add('.modal-open');
+  renderPicture(data);
+  comments = data.comments;
+  renderComments(data.comments);
+  document.addEventListener('keydown', onDocumentKeydown);
+};
+
 bigPictureClose.addEventListener('click', () => {
   closePicture();
+  document.removeEventListener('keydown', onDocumentKeydown);
 });
 
-document.addEventListener('keydown', onDocumentKeydown);
 
 export { openPicture };
 

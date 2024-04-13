@@ -1,13 +1,10 @@
 import { openPicture } from './full-picture.js';
-import { createPost } from './data.js';
 
 const picturesSection = document.querySelector('.pictures');
 
 const template = document.querySelector('#picture').content.querySelector('.picture');
 
-const pictures = createPost();
-
-const renderPictures = () => {
+const renderPictures = (pictures) => {
   const similarPicturesFragment = document.createDocumentFragment();
   pictures.forEach(({ url, description, likes, comments, id}) => {
     const pictureItem = template.cloneNode(true);
@@ -22,7 +19,7 @@ const renderPictures = () => {
   picturesSection.append(similarPicturesFragment);
 };
 
-const renderGallery = () => {
+const renderGallery = (pictures) => {
   picturesSection.addEventListener('click', (evt) => {
     const thumbnail = evt.target.closest('[data-picture-id]');
     if (!thumbnail) {
