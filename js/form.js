@@ -16,6 +16,7 @@ const hashtagInput = document.querySelector('.text__hashtags');
 const captureInput = document.querySelector('.text__description');
 const imageSubmitButton = document.querySelector('.img-upload__submit');
 
+
 const pristine = new Pristine(imageForm, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
