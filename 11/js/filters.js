@@ -16,20 +16,20 @@ const sortRandomly = () => Math.random() - 0.5;
 
 const sortByComments = (picture1, picture2) => picture2.comments.length - picture1.comments.length;
 
-const getImagesByFilter = (pictures,setFilter) => {
-  if (Filter.RANDOM === setFilter) {
+const getImagesByFilter = (pictures,activeFilter) => {
+  if (Filter.RANDOM === activeFilter) {
     return [...pictures].sort(sortRandomly).slice(0, PICTURES_AMOUNT);
   }
-  if (Filter.DISCUSSED === setFilter) {
+  if (Filter.DISCUSSED === activeFilter) {
     return [...pictures].sort(sortByComments);
   } else {
     return [...pictures];
   }
 };
 
-const onGalleryDebounce = debounce(renderGallery);
+const debouncedGallery = debounce(renderGallery);
 
-const renderFilteredImages = (data) => {
+const setFiltersClickHandler = (data) => {
   imageFilters.classList.remove('img-filters--inactive');
   imageFilters.addEventListener('click', (evt) => {
     const activeButton = evt.target;
@@ -41,10 +41,10 @@ const renderFilteredImages = (data) => {
       .classList.remove('img-filters__button--active');
     activeButton.classList.add('img-filters__button--active');
     currentFilter = activeButton.id;
-    onGalleryDebounce(getImagesByFilter(data,currentFilter));
+    debouncedGallery(getImagesByFilter(data,currentFilter));
   });
 };
 
-export { renderFilteredImages};
+export { setFiltersClickHandler};
 
 
