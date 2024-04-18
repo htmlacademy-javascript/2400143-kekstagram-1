@@ -15,8 +15,13 @@ const renderPictures = (pictures) => {
     pictureItem.dataset.pictureId = id;
     similarPicturesFragment.append(pictureItem);
   });
-
   picturesSection.append(similarPicturesFragment);
+};
+
+const clearGallery = () => {
+  document.querySelectorAll('.picture').forEach((item)=>{
+    item.remove();
+  });
 };
 
 const renderGallery = (pictures) => {
@@ -28,7 +33,7 @@ const renderGallery = (pictures) => {
     const picture = pictures.find((item) => item.id === +thumbnail.dataset.pictureId);
     openPicture(picture);
   });
-
+  clearGallery();
   renderPictures(pictures);
 };
 
