@@ -7,6 +7,7 @@ import { showErrorMessage, showSuccessMessage } from './message.js';
 const VALID_HASHTAG = /^#[a-zа-яё0-9]{1,19}$/i;
 const TAG_COUNT = 5;
 const TAG_ERROR_MESSAGE = 'нарушены требования к хэштегам';
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
 
 const imageOverlay = document.querySelector('.img-upload__overlay');
 const imageForm = document.querySelector('.img-upload__form');
@@ -15,6 +16,8 @@ const uploadFieldClose = document.querySelector('#upload-cancel');
 const hashtagInput = document.querySelector('.text__hashtags');
 const captureInput = document.querySelector('.text__description');
 const imageSubmitButton = document.querySelector('.img-upload__submit');
+const fileChooser = document.querySelector('.img-upload input[type=file]');
+const preview = document.querySelector('.img-upload__preview img');
 
 
 const pristine = new Pristine(imageForm, {
@@ -97,6 +100,16 @@ const validateTags = (value) => {
     .filter((tag) => tag.trim().length);
   return isValidTagCount(tags) && checkIfTagIsUnique(tags) && tags.every(isValidTag);
 };
+
+fileChooser.addEventListener('change', () => {
+  const file = fileChooser.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+  if (matches) {
+    preview.src = URL.createObjectURL(file);
+  }
+});
 
 pristine.addValidator(
   hashtagInput,
