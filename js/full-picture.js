@@ -10,7 +10,6 @@ const commentsLoader = bigPicture.querySelector('.comments-loader');
 let comments = [];
 let commentShown = 0;
 
-
 const renderComments = () => {
   commentShown += COMMENTS_PER_LOADING;
 
@@ -66,8 +65,9 @@ const openPicture = (data) => {
   bigPicture.classList.remove('hidden');
   document.body.classList.add('.modal-open');
   renderPicture(data);
+  commentShown = 0;
   comments = data.comments;
-  renderComments(data.comments);
+  renderComments(comments);
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
@@ -75,7 +75,6 @@ bigPictureClose.addEventListener('click', () => {
   closePicture();
   document.removeEventListener('keydown', onDocumentKeydown);
 });
-
 
 export { openPicture };
 
