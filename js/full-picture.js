@@ -10,7 +10,6 @@ const commentsLoader = bigPicture.querySelector('.comments-loader');
 let comments = [];
 let commentShown = 0;
 
-
 const renderComments = () => {
   commentShown += COMMENTS_PER_LOADING;
 
