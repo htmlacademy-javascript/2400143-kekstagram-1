@@ -65,8 +65,9 @@ const openPicture = (data) => {
   bigPicture.classList.remove('hidden');
   document.body.classList.add('.modal-open');
   renderPicture(data);
+  commentShown = 0;
   comments = data.comments;
-  renderComments(data.comments);
+  renderComments(comments);
   document.addEventListener('keydown', onDocumentKeydown);
 };
 
