@@ -76,6 +76,5 @@ bigPictureClose.addEventListener('click', () => {
   document.removeEventListener('keydown', onDocumentKeydown);
 });
 
-
 export { openPicture };
 
