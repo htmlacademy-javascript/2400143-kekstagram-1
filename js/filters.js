@@ -1,4 +1,4 @@
-import { renderGallery} from './pictures.js';
+import { clearGallery,renderPictures } from './pictures.js';
 import { debounce } from './util.js';
 
 const PICTURES_AMOUNT = 10;
@@ -16,7 +16,7 @@ const sortRandomly = () => Math.random() - 0.5;
 
 const sortByComments = (picture1, picture2) => picture2.comments.length - picture1.comments.length;
 
-const getImagesByFilter = (pictures,activeFilter) => {
+const getImagesByFilter = (pictures, activeFilter) => {
   if (Filter.RANDOM === activeFilter) {
     return [...pictures].sort(sortRandomly).slice(0, PICTURES_AMOUNT);
   }
@@ -27,7 +27,10 @@ const getImagesByFilter = (pictures,activeFilter) => {
   }
 };
 
-const debouncedGallery = debounce(renderGallery);
+const debouncedGallery = debounce((pictures) => {
+  clearGallery();
+  renderPictures(pictures);
+});
 
 const setFiltersClickHandler = (data) => {
   imageFilters.classList.remove('img-filters--inactive');
@@ -41,10 +44,10 @@ const setFiltersClickHandler = (data) => {
       .classList.remove('img-filters__button--active');
     activeButton.classList.add('img-filters__button--active');
     currentFilter = activeButton.id;
-    debouncedGallery(getImagesByFilter(data,currentFilter));
+    debouncedGallery(getImagesByFilter(data, currentFilter));
   });
 };
 
-export { setFiltersClickHandler};
+export { setFiltersClickHandler };
 
 

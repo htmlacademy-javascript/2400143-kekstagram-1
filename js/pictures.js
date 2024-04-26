@@ -37,6 +37,6 @@ const renderGallery = (pictures) => {
   renderPictures(pictures);
 };
 
-export {renderGallery};
+export {renderGallery,clearGallery,renderPictures};
 
 
